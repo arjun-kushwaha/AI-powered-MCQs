@@ -48,7 +48,7 @@ export default function AttemptPage() {
     <Shell title="Attempt Test">
       {error ? <p className="error">{error}</p> : null}
       {attempt ? (
-        <div className="attempt-layout">
+        <div className="attempt-layout reveal-up">
           <section className="panel attempt-summary">
             <p className="muted">Total questions: {attempt.total_questions}</p>
             <p className="muted">

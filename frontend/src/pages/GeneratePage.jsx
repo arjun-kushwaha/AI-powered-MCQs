@@ -33,13 +33,17 @@ export default function GeneratePage() {
 
   return (
     <Shell title="Generate MCQs">
-      <form className="panel stack" onSubmit={handleSubmit}>
+      <form className="panel stack reveal-up" onSubmit={handleSubmit}>
         <div className="panel-intro">
           <p className="eyebrow">Create Assessment</p>
           <p className="muted">
             Enter a title and paste a syllabus, a subject, or even a short topic like Python or
             Quantitative Aptitude.
           </p>
+        </div>
+        <div className="hint-row">
+          <span className="hint-chip">Clear title improves question relevance</span>
+          <span className="hint-chip">5 to 50 questions supported</span>
         </div>
         <input
           placeholder="Assessment title"
@@ -48,7 +52,7 @@ export default function GeneratePage() {
         />
         <textarea
           placeholder="Paste syllabus, topics, or subject outline"
-          rows="12"
+          rows="9"
           value={form.source_text}
           onChange={(event) => setForm({ ...form, source_text: event.target.value })}
         />

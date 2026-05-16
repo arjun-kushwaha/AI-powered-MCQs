@@ -35,7 +35,7 @@ export default function QuestionSetPage() {
     <Shell title={questionSet ? questionSet.title : "Question Set"}>
       {error ? <p className="error">{error}</p> : null}
       {questionSet ? (
-        <div className="stack">
+        <div className="stack reveal-up">
           <section className="panel">
             <p className="muted">
               {questionSet.total_questions} questions - {questionSet.time_limit_minutes} minutes

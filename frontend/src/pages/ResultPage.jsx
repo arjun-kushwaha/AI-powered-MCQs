@@ -30,25 +30,54 @@ export default function ResultPage() {
     <Shell title="Result Summary">
       {error ? <p className="error">{error}</p> : null}
       {attempt && certificate ? (
-        <div className="grid two-columns">
+        <div className="grid two-columns reveal-up">
           <section className="panel stack">
             <h2>{certificate.assessment_title}</h2>
-            <p className="metric-line">Total Questions: {attempt.total_questions}</p>
-            <p className="metric-line">Attempted: {attempt.attempted_questions}</p>
-            <p className="metric-line">Correct: {attempt.correct_answers}</p>
-            <p className="metric-line">Wrong: {attempt.wrong_answers}</p>
-            <p className="metric-line">Unattempted: {attempt.unattempted_questions}</p>
-            <p className="metric-line">Negative Marks: {attempt.negative_marks}</p>
-            <p className="metric-line">Final Score: {attempt.final_score}</p>
-            <p className="metric-line">Accuracy: {attempt.accuracy_percentage}%</p>
+            <div className="score-grid">
+              <p className="metric-line">
+                <span>Total Questions</span>
+                <strong>{attempt.total_questions}</strong>
+              </p>
+              <p className="metric-line">
+                <span>Attempted</span>
+                <strong>{attempt.attempted_questions}</strong>
+              </p>
+              <p className="metric-line">
+                <span>Correct</span>
+                <strong>{attempt.correct_answers}</strong>
+              </p>
+              <p className="metric-line">
+                <span>Wrong</span>
+                <strong>{attempt.wrong_answers}</strong>
+              </p>
+              <p className="metric-line">
+                <span>Unattempted</span>
+                <strong>{attempt.unattempted_questions}</strong>
+              </p>
+              <p className="metric-line">
+                <span>Negative Marks</span>
+                <strong>{attempt.negative_marks}</strong>
+              </p>
+              <p className="metric-line">
+                <span>Final Score</span>
+                <strong>{attempt.final_score}</strong>
+              </p>
+              <p className="metric-line">
+                <span>Accuracy</span>
+                <strong>{attempt.accuracy_percentage}%</strong>
+              </p>
+            </div>
           </section>
 
           <section className="panel certificate">
             <p className="eyebrow">Certificate Record</p>
             <h2>{certificate.learner_name}</h2>
-            <p>Completed {certificate.assessment_title}</p>
-            <p>Certificate ID: {certificate.certificate_id}</p>
-            <p>Generated at: {new Date(certificate.generated_at).toLocaleString()}</p>
+            <p className="certificate-line">Completed {certificate.assessment_title}</p>
+            <p className="certificate-line">Certificate ID: {certificate.certificate_id}</p>
+            <p className="certificate-line">
+              Generated at: {new Date(certificate.generated_at).toLocaleString()}
+            </p>
+            <div className="seal">Verified Completion</div>
           </section>
         </div>
       ) : null}

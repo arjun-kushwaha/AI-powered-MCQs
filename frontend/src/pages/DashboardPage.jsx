@@ -14,6 +14,7 @@ export default function DashboardPage() {
     preferred_difficulty: "medium"
   });
   const [error, setError] = useState("");
+  const totalQuestionsGenerated = questionSets.reduce((sum, item) => sum + item.total_questions, 0);
 
   useEffect(() => {
     async function load() {
@@ -52,7 +53,25 @@ export default function DashboardPage() {
 
   return (
     <Shell title="Dashboard">
-      <div className="grid two-columns">
+      <div className="dashboard-summary grid compact-three reveal-up">
+        <section className="panel stat-panel">
+          <p className="eyebrow">Question Sets</p>
+          <strong>{questionSets.length}</strong>
+          <span className="muted">Saved assessments</span>
+        </section>
+        <section className="panel stat-panel">
+          <p className="eyebrow">Questions Built</p>
+          <strong>{totalQuestionsGenerated}</strong>
+          <span className="muted">Across all sets</span>
+        </section>
+        <section className="panel stat-panel">
+          <p className="eyebrow">Default Difficulty</p>
+          <strong>{profile ? profile.preferred_difficulty : form.preferred_difficulty}</strong>
+          <span className="muted">Current profile rule</span>
+        </section>
+      </div>
+
+      <div className="grid two-columns reveal-up delay-2">
         <section className="panel">
           <h2>{user ? `Welcome, ${user.full_name}` : "Welcome"}</h2>
           <p className="muted">
@@ -78,9 +97,7 @@ export default function DashboardPage() {
               type="number"
               step="0.01"
               value={form.negative_mark_per_wrong}
-              onChange={(event) =>
-                setForm({ ...form, negative_mark_per_wrong: event.target.value })
-              }
+              onChange={(event) => setForm({ ...form, negative_mark_per_wrong: event.target.value })}
             />
             <input
               placeholder="Difficulty"
@@ -113,7 +130,7 @@ export default function DashboardPage() {
                 <Link className="list-card" key={setItem.id} to={`/question-sets/${setItem.id}`}>
                   <strong>{setItem.title}</strong>
                   <span>
-                    {setItem.total_questions} questions · {setItem.difficulty} ·{" "}
+                    {setItem.total_questions} questions - {setItem.difficulty} -{" "}
                     {setItem.time_limit_minutes} min
                   </span>
                 </Link>
