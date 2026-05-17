@@ -14,7 +14,7 @@ export default function Shell({ title, children }) {
     <div className="shell">
       <aside className="sidebar-wrap">
         <div className="sidebar">
-          <Brand to="/dashboard" subtitle="Assessment Workspace" />
+          <Brand to="/dashboard" />
           <nav className="nav">
             <Link to="/dashboard">Dashboard</Link>
             <Link to="/generate">Generate MCQs</Link>

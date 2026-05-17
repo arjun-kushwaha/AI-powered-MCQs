@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     algorithm: str = "HS256"
     database_url: str = "sqlite:///./lms.db"
     ollama_url: str = "http://10.100.60.121:11434/api/generate"
-    ollama_model: str = "qwen3:30b"
+    ollama_model: str = "llama3.1:latest"
     ollama_validator_model: str = "mistral:latest"
     cors_origins: list[str] = [
         "http://localhost:5173",

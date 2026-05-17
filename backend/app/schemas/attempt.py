@@ -21,6 +21,12 @@ class AttemptSubmitRequest(BaseModel):
 class AttemptQuestionResponse(QuestionResponse):
     pass
 
+class AttemptAnswerResponse(BaseModel):
+    question_id: int
+    selected_option_key: str | None
+    is_correct: bool
+    correct_option_key: str | None = None
+
 
 class AttemptResponse(BaseModel):
     id: int
@@ -36,6 +42,7 @@ class AttemptResponse(BaseModel):
     final_score: float
     accuracy_percentage: float
     questions: list[AttemptQuestionResponse]
+    answers: list[AttemptAnswerResponse] = Field(default_factory=list)
 
 
 class CertificateResponse(BaseModel):

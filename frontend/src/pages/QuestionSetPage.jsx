@@ -53,8 +53,9 @@ export default function QuestionSetPage() {
               <div className="question-options-grid">
                 {question.options.map((option) => (
                   <div className="option-preview compact-option" key={option.option_key}>
-                    <strong>{option.option_key}</strong>
-                    <span>{option.option_text}</span>
+                    <span>
+                      <strong>{option.option_key})</strong> {option.option_text}
+                    </span>
                   </div>
                 ))}
               </div>

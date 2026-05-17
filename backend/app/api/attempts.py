@@ -13,6 +13,17 @@ router = APIRouter(prefix="/attempts", tags=["attempts"])
 
 
 def _build_attempt_response(attempt: Attempt) -> AttemptResponse:
+    answers_resp = []
+    if attempt.submitted_at and attempt.answers:
+        q_dict = {q.id: q for q in attempt.question_set.questions}
+        for ans in attempt.answers:
+            answers_resp.append({
+                "question_id": ans.question_id,
+                "selected_option_key": ans.selected_option_key,
+                "is_correct": ans.is_correct,
+                "correct_option_key": q_dict[ans.question_id].correct_option_key if ans.question_id in q_dict else None
+            })
+
     return AttemptResponse(
         id=attempt.id,
         question_set_id=attempt.question_set_id,
@@ -27,6 +38,7 @@ def _build_attempt_response(attempt: Attempt) -> AttemptResponse:
         final_score=attempt.final_score,
         accuracy_percentage=attempt.accuracy_percentage,
         questions=attempt.question_set.questions,
+        answers=answers_resp,
     )
 
 
@@ -62,7 +74,10 @@ def start_attempt(
 def get_attempt(attempt_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     attempt = (
         db.query(Attempt)
-        .options(joinedload(Attempt.question_set).joinedload(QuestionSet.questions).joinedload(Question.options))
+        .options(
+            joinedload(Attempt.question_set).joinedload(QuestionSet.questions).joinedload(Question.options),
+            joinedload(Attempt.answers)
+        )
         .filter(Attempt.id == attempt_id, Attempt.user_id == current_user.id)
         .first()
     )
@@ -81,7 +96,10 @@ def submit_attempt(
 ):
     attempt = (
         db.query(Attempt)
-        .options(joinedload(Attempt.question_set).joinedload(QuestionSet.questions).joinedload(Question.options))
+        .options(
+            joinedload(Attempt.question_set).joinedload(QuestionSet.questions).joinedload(Question.options),
+            joinedload(Attempt.answers)
+        )
         .filter(Attempt.id == attempt_id, Attempt.user_id == current_user.id)
         .first()
     )
