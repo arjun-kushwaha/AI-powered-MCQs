@@ -5,7 +5,13 @@ from sqlalchemy.orm import Session, joinedload
 
 from app.api.deps import get_current_user, get_db
 from app.models import Attempt, AttemptAnswer, Question, QuestionSet, User
-from app.schemas.attempt import AttemptCreateRequest, AttemptResponse, AttemptSubmitRequest, CertificateResponse
+from app.schemas.attempt import (
+    AttemptCreateRequest, 
+    AttemptResponse, 
+    AttemptSubmitRequest, 
+    CertificateResponse,
+    AttemptSummaryResponse
+)
 from app.services.scoring import apply_attempt_scoring
 
 
@@ -69,6 +75,34 @@ def start_attempt(
     attempt.question_set = question_set
     return _build_attempt_response(attempt)
 
+@router.get("", response_model=list[AttemptSummaryResponse])
+def get_attempts(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    attempts = (
+        db.query(Attempt)
+        .options(joinedload(Attempt.question_set))
+        .filter(Attempt.user_id == current_user.id)
+        .order_by(Attempt.started_at.desc())
+        .all()
+    )
+    
+    return [
+        AttemptSummaryResponse(
+            id=a.id,
+            question_set_id=a.question_set_id,
+            started_at=a.started_at,
+            submitted_at=a.submitted_at,
+            total_questions=a.total_questions,
+            attempted_questions=a.attempted_questions,
+            correct_answers=a.correct_answers,
+            wrong_answers=a.wrong_answers,
+            unattempted_questions=a.unattempted_questions,
+            negative_marks=a.negative_marks,
+            final_score=a.final_score,
+            accuracy_percentage=a.accuracy_percentage,
+            question_set_title=a.question_set.title
+        )
+        for a in attempts
+    ]
 
 @router.get("/{attempt_id}", response_model=AttemptResponse)
 def get_attempt(attempt_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):

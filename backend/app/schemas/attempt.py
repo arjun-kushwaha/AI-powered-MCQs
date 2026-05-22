@@ -45,6 +45,21 @@ class AttemptResponse(BaseModel):
     answers: list[AttemptAnswerResponse] = Field(default_factory=list)
 
 
+class AttemptSummaryResponse(BaseModel):
+    id: int
+    question_set_id: int
+    started_at: datetime
+    submitted_at: datetime | None
+    total_questions: int
+    attempted_questions: int
+    correct_answers: int
+    wrong_answers: int
+    unattempted_questions: int
+    negative_marks: float
+    final_score: float
+    accuracy_percentage: float
+    question_set_title: str
+
 class CertificateResponse(BaseModel):
     learner_name: str
     assessment_title: str

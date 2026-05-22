@@ -42,6 +42,7 @@ Return ONLY strict JSON with this exact shape, no markdown formatting, no explan
 Rules:
 - Generate EXACTLY {batch_size} UNIQUE questions.
 - Focus strictly on the title: {title}
+- The difficulty level of the questions MUST be strictly {difficulty}. Adjust the depth and cognitive complexity accordingly.
 - Use ONLY the provided syllabus or topic text:
 {source_text}
 - Ensure correct answers are 100% accurate according to the text.

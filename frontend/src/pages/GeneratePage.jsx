@@ -131,12 +131,15 @@ export default function GeneratePage() {
               max="100"
               required
             />
-            <input
-              placeholder="Difficulty"
+            <select
               value={form.difficulty}
               onChange={(event) => setForm({ ...form, difficulty: event.target.value })}
               required
-            />
+            >
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
           </div>
           {error ? <p className="error">{error}</p> : null}
           <button className="primary-button" type="submit">

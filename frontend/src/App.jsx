@@ -7,6 +7,7 @@ import GeneratePage from "./pages/GeneratePage";
 import QuestionSetPage from "./pages/QuestionSetPage";
 import AttemptPage from "./pages/AttemptPage";
 import ResultPage from "./pages/ResultPage";
+import HistoryPage from "./pages/HistoryPage";
 import { getToken } from "./api/client";
 
 function ProtectedRoute({ children }) {
@@ -24,6 +25,14 @@ export default function App() {
         element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/history"
+        element={
+          <ProtectedRoute>
+            <HistoryPage />
           </ProtectedRoute>
         }
       />

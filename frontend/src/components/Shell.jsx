@@ -18,6 +18,7 @@ export default function Shell({ title, children }) {
           <nav className="nav">
             <Link to="/dashboard">Dashboard</Link>
             <Link to="/generate">Generate MCQs</Link>
+            <Link to="/history">History</Link>
           </nav>
           <button className="secondary-button" onClick={logout}>
             Logout

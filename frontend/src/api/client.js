@@ -61,6 +61,7 @@ export const api = {
   generateQuestionSet: (payload) =>
     request("/question-sets/generate", { method: "POST", body: JSON.stringify(payload) }),
   startAttempt: (payload) => request("/attempts", { method: "POST", body: JSON.stringify(payload) }),
+  getAttempts: () => request("/attempts"),
   getAttempt: (id) => request(`/attempts/${id}`),
   submitAttempt: (id, payload) =>
     request(`/attempts/${id}/submit`, { method: "POST", body: JSON.stringify(payload) }),
